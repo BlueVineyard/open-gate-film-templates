@@ -1,0 +1,79 @@
+.ogft-logo-slider {
+    padding: 0 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+.ogft-logo-slider .logo-slider__tilt {
+    transform: 0;
+    transform-origin: center;
+}
+
+.ogft-logo-slider .logo-slider__viewport {
+    overflow: hidden;
+    width: 100%;
+}
+
+.ogft-logo-slider .logo-slider__track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+    padding: 10px 6vw;
+    margin-inline: auto;
+    will-change: transform;
+}
+
+.ogft-logo-slider .logo-slider__viewport:hover {
+    cursor: pointer;
+}
+
+.ogft-logo-slider .logo-stack {
+    width: 100%;
+    min-width: 300px;
+    max-width: 326px;
+    display: grid;
+    gap: 16px;
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    align-items: center;
+    justify-items: center;
+}
+
+.ogft-logo-slider .logo-stack--single {
+    grid-template-rows: 1fr;
+}
+
+.ogft-logo-slider .logo-stack__item {
+    display: grid;
+    place-items: center;
+    padding: 0 20px;
+    background: #161616;
+    border-radius: 24px;
+    min-height: 144.5px;
+    height: 100%;
+    width: 100%;
+}
+
+.ogft-logo-slider .logo-stack__item img {
+    max-width: 100%;
+    height: 100%;
+    max-height: 122px;
+    object-fit: contain;
+    filter: brightness(0) invert(1) saturate(0);
+}
+
+.ogft-logo-slider .logo-stack__item img:hover {
+    opacity: 1;
+}
+
+@media (max-width: 900px) {
+    .ogft-logo-slider .logo-stack {
+        min-width: 180px;
+        max-width: 200px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ogft-logo-slider .logo-slider__tilt {
+        transform: none;
+    }
+}

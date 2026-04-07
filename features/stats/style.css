@@ -1,0 +1,100 @@
+.ogft-stats-marquee {
+    padding: 72px 0;
+    overflow: hidden;
+    width: 100%;
+    margin-inline: auto;
+}
+
+.ogft-stats-marquee .stats-marquee__tilt {
+    transform: rotate(-2deg);
+    transform-origin: center;
+}
+
+.ogft-stats-marquee .stats-marquee__viewport {
+    overflow: hidden;
+    width: 100%;
+}
+
+.ogft-stats-marquee .stats-marquee__track {
+    display: flex;
+    gap: 22px;
+    width: max-content;
+    padding: 8px 6vw;
+    margin-inline: auto;
+    will-change: transform;
+}
+
+.ogft-stats-marquee .stats-marquee__viewport:hover {
+    cursor: pointer;
+}
+
+.ogft-stats-marquee .stat-card {
+    width: 384px;
+    height: 370px;
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    flex: 0 0 auto;
+    background-image: var(--bg);
+    background-size: cover;
+    background-position: center;
+    transform: translateZ(0);
+}
+
+.ogft-stats-marquee .stat-card__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 65%, rgba(0, 0, 0, 0.78) 100%),
+        radial-gradient(90% 60% at 20% 10%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 55%);
+    pointer-events: none;
+}
+
+.ogft-stats-marquee .stat-card__content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 26px;
+    color: #fff;
+    z-index: 1;
+}
+
+.ogft-stats-marquee .stat-card__kicker {
+    margin: 0 0 8px;
+    font: 600 13px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.92;
+}
+
+.ogft-stats-marquee .stat-card__value {
+    margin: 0 0 10px;
+    font: 800 54px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    letter-spacing: -0.02em;
+}
+
+.ogft-stats-marquee .stat-card__label {
+    margin: 0;
+    font: 500 16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    opacity: 0.9;
+}
+
+.ogft-stats-marquee .stat-card:hover {
+    transform: translateY(-4px);
+    transition: transform 0.25s ease;
+}
+
+@media (max-width: 900px) {
+    .ogft-stats-marquee .stat-card {
+        width: 320px;
+        height: 320px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ogft-stats-marquee .stats-marquee__tilt {
+        transform: none;
+    }
+}

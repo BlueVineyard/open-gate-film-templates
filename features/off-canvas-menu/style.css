@@ -1,0 +1,357 @@
+/* ===========================
+   Off-Canvas Menu
+   =========================== */
+
+/* --- Trigger Button --- */
+
+.ogft-menu-trigger {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 16px;
+    background: transparent;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.ogft-menu-trigger:hover {
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+.ogft-menu-trigger__label {
+    font-family: "Manrope", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.32;
+    color: white;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.ogft-menu-trigger__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+    flex-shrink: 0;
+}
+
+/* --- Off-Canvas Container --- */
+
+.ogft-off-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    pointer-events: none;
+    visibility: hidden;
+    transition: visibility 0s linear 0.5s;
+}
+
+.ogft-off-canvas.is-open {
+    pointer-events: auto;
+    visibility: visible;
+    transition: visibility 0s linear 0s;
+}
+
+/* --- Backdrop --- */
+
+.ogft-off-canvas__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.ogft-off-canvas.is-open .ogft-off-canvas__backdrop {
+    opacity: 1;
+}
+
+/* --- Panel --- */
+
+.ogft-off-canvas__panel {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    bottom: 20px;
+    width: min(962px, calc(100% - 40px));
+    background: white;
+    border-radius: 48px;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transform: translateX(calc(100% + 40px));
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ogft-off-canvas.is-open .ogft-off-canvas__panel {
+    transform: translateX(0);
+}
+
+/* --- Header / Close Button --- */
+
+.ogft-off-canvas__header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+}
+
+.ogft-off-canvas__close {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 6px;
+    background: black;
+    border: none;
+    border-radius: 40px;
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: transform 0.18s ease;
+}
+
+.ogft-off-canvas__close:hover {
+    transform: translateY(-1px);
+}
+
+.ogft-off-canvas__close-label {
+    font-family: "Manrope", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.32;
+    color: white;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.ogft-off-canvas__close-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+    flex-shrink: 0;
+}
+
+/* --- Navigation --- */
+
+.ogft-off-canvas__nav {
+    flex: 1;
+    padding-left: 80px;
+    max-height: calc(100vh - 260px);
+    overflow-y: auto;
+}
+
+.ogft-off-canvas__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 27px;
+}
+
+.ogft-off-canvas__item {
+    margin: 0;
+    padding: 0;
+}
+
+.ogft-off-canvas__link-wrap {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* --- Link with hover text-scroll --- */
+
+.ogft-off-canvas__link,
+.ogft-off-canvas__link:hover,
+.ogft-off-canvas__link:focus,
+.ogft-off-canvas__link:visited {
+    text-decoration: none;
+    color: black;
+    display: block;
+    overflow: hidden;
+    height: 106px;
+}
+
+.ogft-off-canvas__link-text {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ogft-off-canvas__link-text span {
+    font-family: "Mona Sans", sans-serif;
+    font-weight: 600;
+    font-size: 80px;
+    line-height: 1.32;
+    text-transform: uppercase;
+    display: block;
+    height: 106px;
+}
+
+.ogft-off-canvas__link:hover .ogft-off-canvas__link-text,
+.ogft-off-canvas__link:focus-visible .ogft-off-canvas__link-text {
+    transform: translateY(-106px);
+}
+
+/* --- Submenu Toggle --- */
+
+.ogft-off-canvas__submenu-toggle {
+    position: relative;
+    top: -40px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.ogft-off-canvas__submenu-toggle[aria-expanded="true"] {
+    transform: rotate(180deg);
+}
+
+/* --- Submenu --- */
+
+.ogft-off-canvas__submenu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ogft-off-canvas__submenu.is-open {
+    max-height: 500px;
+    padding-top: 16px;
+}
+
+.ogft-off-canvas__submenu li {
+    padding-left: 24px;
+    border-left: 3px solid #e0e0e0;
+}
+
+.ogft-off-canvas__submenu-link,
+.ogft-off-canvas__submenu-link:hover,
+.ogft-off-canvas__submenu-link:focus,
+.ogft-off-canvas__submenu-link:visited {
+    font-family: "Mona Sans", sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.4;
+    color: #999;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    padding: 6px 0;
+    transition: color 0.2s ease;
+}
+
+.ogft-off-canvas__submenu-link:hover {
+    color: black;
+}
+
+/* --- Decoration --- */
+
+.ogft-off-canvas__decoration {
+    position: absolute;
+    bottom: 48px;
+    left: 48px;
+}
+
+/* --- Focus Styles --- */
+
+.ogft-off-canvas__link:focus-visible {
+    outline: 3px solid rgba(0, 0, 0, 0.3);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+.ogft-off-canvas__close:focus-visible {
+    outline: 3px solid rgba(255, 255, 255, 0.6);
+    outline-offset: 4px;
+}
+
+/* --- Reduced Motion --- */
+
+@media (prefers-reduced-motion: reduce) {
+    .ogft-off-canvas__panel,
+    .ogft-off-canvas__backdrop,
+    .ogft-off-canvas__link-text,
+    .ogft-off-canvas__submenu,
+    .ogft-off-canvas__submenu-toggle {
+        transition: none;
+    }
+}
+
+/* --- Responsive: Tablet --- */
+
+@media (max-width: 1024px) {
+    .ogft-off-canvas__nav {
+        padding-left: 40px;
+    }
+
+    .ogft-off-canvas__link-text span {
+        font-size: 60px;
+        height: 80px;
+    }
+
+    .ogft-off-canvas__link {
+        height: 80px;
+    }
+
+    .ogft-off-canvas__link:hover .ogft-off-canvas__link-text,
+    .ogft-off-canvas__link:focus-visible .ogft-off-canvas__link-text {
+        transform: translateY(-80px);
+    }
+}
+
+/* --- Responsive: Mobile --- */
+
+@media (max-width: 640px) {
+    .ogft-off-canvas__panel {
+        top: 10px;
+        right: 10px;
+        bottom: 10px;
+        width: calc(100% - 20px);
+        padding: 24px;
+        border-radius: 32px;
+    }
+
+    .ogft-off-canvas__nav {
+        padding-left: 16px;
+    }
+
+    .ogft-off-canvas__list {
+        gap: 18px;
+    }
+
+    .ogft-off-canvas__link-text span {
+        font-size: 40px;
+        height: 53px;
+    }
+
+    .ogft-off-canvas__link {
+        height: 53px;
+    }
+
+    .ogft-off-canvas__link:hover .ogft-off-canvas__link-text,
+    .ogft-off-canvas__link:focus-visible .ogft-off-canvas__link-text {
+        transform: translateY(-53px);
+    }
+
+    .ogft-off-canvas__submenu-toggle svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .ogft-off-canvas__submenu-link {
+        font-size: 18px;
+    }
+}
