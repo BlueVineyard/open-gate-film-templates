@@ -33,14 +33,14 @@ document.querySelectorAll(".ogft-logo-slider").forEach((section) => {
     gsap.set(track, { x: -distance / 2 });
 
     const tween = gsap.to(track, {
-        x: `-=${distance}`,
+        x: `+=${distance}`,
         duration: window.ogftLogoSliderData?.speed ? parseFloat(window.ogftLogoSliderData.speed) : 24,
         ease: "none",
         repeat: -1,
         modifiers: {
             x: (x) => {
                 const v = parseFloat(x);
-                return (v % -distance) + "px";
+                return ((v % distance) - distance) + "px";
             },
         },
     });

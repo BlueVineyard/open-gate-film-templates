@@ -157,6 +157,15 @@
     color: #e1e1e1;
 }
 
+.ogft-video-lightbox__video {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #000;
+    max-height: calc(90vh - 100px);
+    object-fit: contain;
+}
+
 .plyr--full-ui input[type="range"] {
     accent-color: #f5f5f5;
 }

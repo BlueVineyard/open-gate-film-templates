@@ -969,3 +969,87 @@ function ogft_shortcode_off_canvas_menu($atts = [])
     return ob_get_clean();
 }
 add_shortcode('open_gate_menu', 'ogft_shortcode_off_canvas_menu');
+
+function ogft_enqueue_video_lightbox_assets()
+{
+    wp_enqueue_style(
+        'plyr',
+        'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.css',
+        [],
+        '3.7.8'
+    );
+    wp_enqueue_script(
+        'plyr',
+        'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.polyfilled.js',
+        [],
+        '3.7.8',
+        true
+    );
+
+    wp_enqueue_style(
+        'ogft-featured-work-modal',
+        OGFT_URL . 'features/featured-work/modal.css',
+        [],
+        OGFT_VERSION
+    );
+
+    wp_enqueue_script(
+        'ogft-video-lightbox',
+        OGFT_URL . 'features/video-lightbox/script.js',
+        ['plyr'],
+        OGFT_VERSION,
+        true
+    );
+
+    static $localized = false;
+    if (!$localized) {
+        $settings = ogft_get_settings();
+        wp_localize_script('ogft-video-lightbox', 'ogftVideoLightboxConfig', [
+            'brand' => get_bloginfo('name'),
+            'brandLogo' => OGFT_URL . 'assets/open-gate-white.svg',
+            'ctaLabel' => __('Request a quote', 'open-gate-film-templates'),
+            'ctaUrl' => !empty($settings['featured_work_cta_url']) ? $settings['featured_work_cta_url'] : '',
+        ]);
+        $localized = true;
+    }
+}
+
+function ogft_shortcode_video_lightbox($atts = [])
+{
+    $atts = shortcode_atts([
+        'video' => '',
+        'thumbnail' => '',
+        'type' => 'thumbnail',
+        'button-text' => 'Watch Video',
+    ], $atts, 'open_gate_video_lightbox');
+
+    if (empty($atts['video'])) {
+        return '';
+    }
+
+    $video_data = ogft_parse_video_data($atts['video']);
+
+    $lightbox_video = [
+        'url' => $atts['video'],
+        'video_type' => $video_data['type'],
+        'embed_src' => $video_data['embed_src'],
+        'embed_id' => isset($video_data['embed_id']) ? $video_data['embed_id'] : '',
+        'vimeo_hash' => isset($video_data['vimeo_hash']) ? $video_data['vimeo_hash'] : '',
+        'thumbnail' => $atts['thumbnail'],
+    ];
+
+    static $instance = 0;
+    $instance++;
+
+    $lightbox_id = 'ogft-video-lightbox-' . $instance;
+    $lightbox_type = $atts['type'];
+    $lightbox_thumb = $atts['thumbnail'];
+    $lightbox_text = $atts['button-text'];
+
+    ogft_enqueue_video_lightbox_assets();
+
+    ob_start();
+    include OGFT_PATH . 'features/video-lightbox/template.php';
+    return ob_get_clean();
+}
+add_shortcode('open_gate_video_lightbox', 'ogft_shortcode_video_lightbox');
