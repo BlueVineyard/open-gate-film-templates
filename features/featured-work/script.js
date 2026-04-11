@@ -3,6 +3,8 @@ document.querySelectorAll(".ogft-featured-work .fw-card").forEach((card) => {
     const iframe = card.querySelector(".fw-embed");
     const overlayImg = card.querySelector(".fw-overlay-img");
     const type = iframe?.dataset.videoType;
+    const section = card.closest(".ogft-featured-work");
+    const alwaysAutoplay = section && section.dataset.autoplayAlways === "yes";
 
     const hideOverlay = () => {
         if (overlayImg) {
@@ -34,10 +36,15 @@ document.querySelectorAll(".ogft-featured-work .fw-card").forEach((card) => {
             showOverlay();
         };
 
-        card.addEventListener("mouseenter", playVideo);
-        card.addEventListener("mouseleave", stopVideo);
-        card.addEventListener("focusin", playVideo);
-        card.addEventListener("focusout", stopVideo);
+        if (alwaysAutoplay) {
+            video.loop = true;
+            playVideo();
+        } else {
+            card.addEventListener("mouseenter", playVideo);
+            card.addEventListener("mouseleave", stopVideo);
+            card.addEventListener("focusin", playVideo);
+            card.addEventListener("focusout", stopVideo);
+        }
         return;
     }
 
@@ -68,9 +75,13 @@ document.querySelectorAll(".ogft-featured-work .fw-card").forEach((card) => {
             showOverlay();
         };
 
-        card.addEventListener("mouseenter", postMessagePlay);
-        card.addEventListener("mouseleave", postMessagePause);
-        card.addEventListener("focusin", postMessagePlay);
-        card.addEventListener("focusout", postMessagePause);
+        if (alwaysAutoplay) {
+            iframe.addEventListener("load", postMessagePlay);
+        } else {
+            card.addEventListener("mouseenter", postMessagePlay);
+            card.addEventListener("mouseleave", postMessagePause);
+            card.addEventListener("focusin", postMessagePlay);
+            card.addEventListener("focusout", postMessagePause);
+        }
     }
 });

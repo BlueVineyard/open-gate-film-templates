@@ -377,7 +377,7 @@ function ogft_get_featured_work_items_from_posts($atts = [])
             'id' => $post->ID,
             'link' => get_permalink($post),
             'kicker' => $kicker,
-            'title' => get_the_title($post),
+            'title' => (function_exists('get_field') && ($alt = get_field('alternate_title', $post->ID)) ? $alt : get_the_title($post)),
             'meta' => $meta,
             'video_src' => $video_src,
             'video_type' => $video_data['type'],
@@ -683,6 +683,7 @@ function ogft_shortcode_featured_work($atts = [])
     $raw_atts = is_array($atts) ? $atts : [];
     $slider_in_mobile = isset($raw_atts['slider-in-mobile']) && strtolower($raw_atts['slider-in-mobile']) === 'yes';
     $title_limit = isset($raw_atts['title-limit']) ? absint($raw_atts['title-limit']) : 0;
+    $autoplay_always = isset($raw_atts['autoplayalways']) && strtolower($raw_atts['autoplayalways']) === 'yes';
 
     $items = ogft_get_featured_work_items_from_posts($raw_atts);
 

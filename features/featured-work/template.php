@@ -104,7 +104,7 @@ function ogft_render_fw_card($item, $title_limit = 0)
 }
 } // end function_exists
 ?>
-<div class="<?php echo esc_attr($wrapper_class); ?>" aria-label="Featured work">
+<div class="<?php echo esc_attr($wrapper_class); ?>" aria-label="Featured work"<?php echo !empty($autoplay_always) ? ' data-autoplay-always="yes"' : ''; ?>>
     <div class="fw-grid">
         <?php foreach ($items as $item): ?>
             <?php ogft_render_fw_card($item, $title_limit); ?>

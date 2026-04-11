@@ -23,9 +23,6 @@
     will-change: transform;
 }
 
-.ogft-logo-slider .logo-slider__viewport:hover {
-    cursor: pointer;
-}
 
 .ogft-logo-slider .logo-stack {
     width: 100%;

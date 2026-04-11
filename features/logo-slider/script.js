@@ -45,11 +45,4 @@ document.querySelectorAll(".ogft-logo-slider").forEach((section) => {
         },
     });
 
-    const pause = () => tween.pause();
-    const resume = () => tween.resume();
-
-    viewport.addEventListener("mouseenter", pause);
-    viewport.addEventListener("mouseleave", resume);
-    viewport.addEventListener("focusin", pause);
-    viewport.addEventListener("focusout", resume);
 });
